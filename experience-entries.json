@@ -1,0 +1,19 @@
+{
+  "entries": [{
+    "title": "One",
+    "backgroundUrl": "http://anthonyl.im/wp-content/themes/theme2/images/exp1.jpg",
+    "line_one" : "Something something"
+  }, {
+    "title": "Two",
+    "backgroundUrl": "http://anthonyl.im/wp-content/themes/theme2/images/exp2.jpg",
+    "line_one" : "Another and another until something"
+  }, {
+    "title": "Three",
+    "backgroundUrl": "http://anthonyl.im/wp-content/themes/theme2/images/exp3.jpg",
+    "line_one" : "The quick brown fox jumped over a really large lake"
+  }, {
+    "title": "Four",
+    "backgroundUrl": "http://anthonyl.im/wp-content/themes/theme2/images/exp3.jpg",
+    "line_one" : "The quick brown fox jumped over a really large lake"
+  }]
+}
