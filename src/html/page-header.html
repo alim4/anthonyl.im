@@ -1,0 +1,56 @@
+<div id="parallax1" class="parallaxParent">
+  <div ng-style="{ 'background-image' : 'url(http://janpaepke.github.io/ScrollMagic/img/example_parallax_bg1.png)' }">
+    <div style="text-align: center">
+      <div class="push-very-big"></div>
+      <div id="title">
+        <h1 class="header-text">Anthony</h1>
+        <hr class="small">
+        <span class="subheading header-sub-text">I am Anthony</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="push-big"></div>
+<div id="trigger"></div>
+
+
+<script>
+  var wh = window.innerHeight,
+    $title = $('#title');
+
+  // init controller
+  var controller = new ScrollMagic.Controller({
+    globalSceneOptions: {
+      triggerHook: "onEnter",
+      duration: "200%"
+    }
+  });
+
+  // build scenes
+  if (!isMobile) {
+    new ScrollMagic.Scene({
+        triggerElement: "#trigger"
+      })
+      .setTween("#parallax1 > div", {
+        y: "80%",
+        ease: Linear.easeNone
+      })
+      .addTo(controller);
+  }
+
+  var fadeTitle = new TimelineMax();
+  fadeTitle
+    .to($title, 1, {
+      opacity: 0,
+      scale: 0.1
+    });
+
+  new ScrollMagic.Scene({
+      triggerElement: "#trigger"
+    })
+    .setTween(fadeTitle)
+    .addIndicators({
+      name: "Fade Title"
+    })
+    .addTo(controller);
+</script>

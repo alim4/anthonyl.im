@@ -2,7 +2,9 @@
   var app = angular.module('page', ['ngAnimate', 'ui.router']);
   var baseURL = templateUrl; // from index.php
 
-  app.controller('PageController', function() {
+  app.controller('PageController', function($scope) {
+    // Set base URL for file loading
+    $scope.baseURL = baseURL;
 
     this.selectTab = function(setTab) {
       this.tab = setTab;
@@ -20,93 +22,84 @@
     };
   });
 
-  app.controller('homeController', function($scope, $window, $http) {
+  app.directive('pageHeader', function() {
+    return {
+      restrict: 'E',
+      templateUrl: baseURL + '/src/html/page-header.html'
+    }
+  });
+
+  app.directive('experienceEntry', function() {
+    return {
+      restrict: 'E',
+      templateUrl: baseURL + '/src/html/experience_entry.html'
+    }
+  });
+
+  app.controller('homeController', function($scope) {
     this.tab = 1;
+
+    console.log("Loaded homeController");
+  });
+
+  app.controller('aboutController', function($scope, $window, $http) {
+    this.tab = 2;
+
     $http.get(baseURL + '/local.properties').then(function(response) {
       $scope.home_row_1_col_1 = response.data.home_row_1_col_1;
       $scope.home_row_1_col_2 = response.data.home_row_1_col_2;
       $scope.home_row_1_col_3 = response.data.home_row_1_col_3;
     });
-    $scope.message = 'Home index.html';
-    $scope.baseURL = baseURL;
-    scrollToTop();
-    toggleAltonClass();
-    console.log("Clicked homeController");
-  });
 
-  app.controller('aboutController', function($scope, $window) {
-    this.tab = 2;
-    $scope.message = 'About about.html';
-    $scope.baseURL = baseURL;
-    scrollToTop();
-    toggleAltonClass();
-    console.log("Clicked aboutController");
+    console.log("Loaded aboutController");
   });
 
   app.controller('contactController', function($scope, $window) {
     this.tab = 3;
-    $scope.message = 'Contact contact.html';
-    $scope.baseURL = baseURL;
-    scrollToTop();
-    toggleAltonClass();
-    console.log("Clicked contactController");
+
+    console.log("Loaded contactController");
   });
 
   app.controller('experienceController', function($state, $scope, $window, $http) {
     this.tab = 4;
-    $scope.baseURL = baseURL;
-    scrollToTop();
-    toggleAltonClass();
 
-    $state.transitionTo('experience.entry');
-    console.log("Clicked experienceController");
+    $http.get(baseURL + "/experience-entries.json")
+      .success(function(data) {
+        console.log("JSON get successful");
+        $scope.entries = data.entries;
+      });
+
+    //$state.transitionTo('experience.entry');
+    console.log("Loaded experienceController");
   });
 
   app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
     // For unmatched URLs
-    $urlRouterProvider.otherwise("/home");
+    $urlRouterProvider.otherwise("/");
 
     $stateProvider
-      .state('home', {
-        url: "/home",
-        templateUrl: templateUrl + '/src/html/home.html',
-        controller: 'homeController'
-      })
-
-    .state('about', {
-      url: "/about",
-      templateUrl: templateUrl + '/src/html/about.html',
-      controller: 'aboutController'
-    })
-
-    .state('contact', {
-      url: "/contact",
-      templateUrl: templateUrl + '/src/html/contact.html',
-      controller: 'contactController'
-    })
-
-    .state('experience', {
-      url: "/experience",
-      templateUrl: templateUrl + '/src/html/experience.html',
-      controller: 'experienceController'
-    })
-
-    .state('experience.entry', {
-      templateUrl: templateUrl + '/src/html/experience_entry.html',
-      controller: function($scope, $http) {
-        var entries = [];
-
-        $http.get(baseURL + "/experience-entries.json")
-          .success(function(data) {
-            console.log("JSON get successful");
-            entries.push(data);
-            $scope.entries = data.entries;
-          });
-        console.log("scope: " + $scope.entries);
-        console.log("entries: " + entries);
-      }
-    });
+      .state('root', {
+        url: '/',
+        views: {
+          'home': {
+            templateUrl: templateUrl + '/src/html/home.html',
+            controller: 'homeController'
+          },
+          'about': {
+            templateUrl: templateUrl + '/src/html/about.html',
+            controller: 'aboutController'
+          },
+          'contact': {
+            templateUrl: templateUrl + '/src/html/contact.html',
+            controller: 'contactController'
+          },
+          'experience': {
+            templateUrl: templateUrl + '/src/html/experience.html',
+            controller: 'experienceController'
+          }
+        }
+      });
 
     $locationProvider.html5Mode(true);
   });

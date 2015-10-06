@@ -8,6 +8,13 @@ Text Domain: anthony
 Version: 1.0
 */
 
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url('http://themes.googleusercontent.com/static/fonts/opensans/v6/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff') format('woff');
+}
+
 html, body {
   margin: 0px;
   padding: 0px;
@@ -407,10 +414,14 @@ img::-moz-selection {
 }
 
 .header-sub-text {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 24px;
   text-shadow: 3px 3px 7px rgba(16, 16, 16, 0.5);
 }
 
 .header-text {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 48px;
   text-shadow: 3px 3px 7px rgba(16, 16, 16, 0.5);
 }
 
@@ -428,7 +439,7 @@ img::-moz-selection {
 }
 
 .push-big {
-  height: 8em;
+  height: 6em;
 }
 
 .footer {
@@ -471,6 +482,10 @@ img::-moz-selection {
   -o-background-size: cover;
 }
 
+.mask-image {
+  -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, color-stop(50%,rgba(0,0,0,1)), color-stop(90%,rgba(37,40,48,0)), color-stop(100%,rgba(37,40,48,0)));
+}
+
 .experience .entry {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 64px;
@@ -491,4 +506,20 @@ img::-moz-selection {
   margin-left: auto;
   margin-right: auto;
   margin-top: -40px;
+}
+
+#target, #path {
+  display: block;
+  margin: auto;
+}
+
+.parallaxParent {
+  height: 90vh;
+  overflow: hidden;
+}
+
+.parallaxParent > * {
+  height: 200%;
+  position: relative;
+  top: -100%;
 }

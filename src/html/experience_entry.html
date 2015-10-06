@@ -1,11 +1,9 @@
-<div ng-repeat="entry in entries">
-  <div class="container-fluid">
-    <div class="experience" ng-style="{ 'background-image' : 'url({{ entry.backgroundUrl }})' }">
-      <div class="row">
-        <div class="col-md-8 col-md-offset-1">
-          <p class="entry">Hello {{ entry.title }} </p>
-          <h3>{{ entry.line_one }}</h3>
-        </div>
+<div class="container-fluid">
+  <div class="experience" ng-style="{ 'background-image' : 'url({{ entry.backgroundUrl }})' }" ng-class="{'mask-image':$last}">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-1">
+        <p class="entry">Hello {{ entry.title }} </p>
+        <h3>{{ entry.line_one }}</h3>
       </div>
     </div>
   </div>
